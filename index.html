@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>AdapTeach</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Fonts - Sora -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Load Tailwind CSS first to prevent FOUC -->
+    <link href="/tailwind.css" rel="stylesheet" />
+
+    <!-- Critical CSS inline to prevent FOUC -->
+    <style>
+      /* Critical loading styles - override any potential FOUC */
+      body {
+        margin: 0;
+        font-family: 'Sora', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
+        background-color: #eeeff6 !important;
+        visibility: visible !important;
+      }
+
+      #app {
+        min-height: 100vh !important;
+        visibility: visible !important;
+      }
+
+      /* Prevent any flash of unstyled content */
+      * {
+        box-sizing: border-box;
+      }
+
+      /* Loading spinner styles */
+      .loading-spinner {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border: 2px solid #f3f3f3;
+        border-top: 2px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+
+    <!-- Tailwind CSS already loaded above to prevent FOUC -->
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="description" content="AdapTeach is a collaborative platform that empowers educators to create, share and manage learning resources." />
+    <meta property="og:title" content="AdapTeach" />
+    <meta property="og:description" content="AdapTeach is a collaborative platform that empowers educators to create, share and manage learning resources." />
+    <meta property="og:image" content="/logo.png" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="./src/index.tsx"></script>
+  </body>
+</html>
