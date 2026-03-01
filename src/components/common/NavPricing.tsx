@@ -15,7 +15,7 @@ export const NavbarPricing = () => {
     { name: "Manfaat Fitur", href: "#" },
     { name: "Partner", href: "#" },
     { name: "FAQ", href: "#" },
-    { name: "Hubungi Kami", href: "#" },
+    { name: "Hubungi Kami", href: "/pricing" },
   ];
 
   return (

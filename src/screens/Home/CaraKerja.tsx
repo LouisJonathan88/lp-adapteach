@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 export const CaraKerja: React.FC = () => {
   const stepIcons = {
@@ -35,22 +36,58 @@ export const CaraKerja: React.FC = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.3 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.8, y: 20 },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      y: 0, 
+      transition: { duration: 0.5, ease: "easeOut" } 
+    },
+  };
+
   return (
     <section className="w-full py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center text-center mb-20">
+
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center text-center mb-20"
+        >
           <p className="font-inter font-medium text-base leading-none text-[#692AFF] mb-3">
             Cara Kerja
           </p>
           <h2 className="font-inter font-semibold text-[40px] leading-[1.5] tracking-[-0.02em] text-[#33383F] text-center max-w-[647px] mx-auto">
             Cara Kerja Fitur Kami
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-12 mb-12 md:mb-32">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-12 mb-12 md:mb-32"
+        >
           {steps.map((step, index) => (
-            <div key={index} className="flex flex-col items-center text-center">
+            <motion.div 
+              key={index} 
+              variants={itemVariants}
+              className="flex flex-col items-center text-center"
+            >
               <div className="relative mb-8 flex items-center justify-center w-full">
+                {/* Garis Penghubung (Dotted Line) */}
                 {index < steps.length - 1 && (
                   <div className="hidden md:flex absolute left-[50%] w-full justify-center gap-2 z-0">
                     {[...Array(7)].map((_, i) => (
@@ -61,7 +98,8 @@ export const CaraKerja: React.FC = () => {
                     ))}
                   </div>
                 )}
-                <div className="w-[120px] h-[120px] bg-[#f3f0ff] rounded-full flex items-center justify-center relative z-10 shadow-sm">
+                
+                <div className="w-[120px] h-[120px] bg-[#f3f0ff] rounded-full flex items-center justify-center relative z-10 shadow-sm border border-purple-50">
                   <img
                     src={step.icon}
                     alt={step.title}
@@ -84,6 +122,7 @@ export const CaraKerja: React.FC = () => {
                 </p>
               </div>
 
+              {/* Garis Vertikal Mobile */}
               {index < steps.length - 1 && (
                 <div className="flex md:hidden flex-col items-center gap-[5px] my-8">
                   {[...Array(6)].map((_, i) => (
@@ -94,11 +133,17 @@ export const CaraKerja: React.FC = () => {
                   ))}
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col items-center text-center">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          viewport={{ once: false }}
+          className="flex flex-col items-center text-center"
+        >
           <p className="font-inter font-medium text-base leading-none text-[#692AFF] text-center mb-3">
             Partner
           </p>
@@ -106,28 +151,16 @@ export const CaraKerja: React.FC = () => {
             Bisnis Partner Kami
           </h2>
           <div className="flex flex-wrap justify-center items-center gap-12 lg:gap-24">
-            <img
-              src={partnerLogos.harvest}
-              alt="Harvest"
-              className="h-14 w-auto object-contain"
-            />
-            <img
-              src={partnerLogos.edgeKart}
-              alt="EdgeKart"
-              className="h-14 w-auto object-contain"
-            />
-            <img
-              src={partnerLogos.pastel}
-              alt="Pastel&Co"
-              className="h-14 w-auto object-contain"
-            />
-            <img
-              src={partnerLogos.yellowBook}
-              alt="Yellow Book"
-              className="h-14 w-auto object-contain"
-            />
+            {Object.values(partnerLogos).map((logo, idx) => (
+              <img
+                key={idx}
+                src={logo}
+                alt="Partner Logo"
+                className="h-14 w-auto object-contain"
+              />
+            ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

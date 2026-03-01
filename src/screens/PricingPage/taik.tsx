@@ -1,25 +1,14 @@
 import React, { useState } from "react";
 import { Check, Minus } from "lucide-react";
-import { motion } from "framer-motion"; // Tambahkan import motion
 import { NavbarPricing } from "@/components/common/NavPricing";
 import { Manfaat } from "@/screens/Home//Manfaat";
 import { CaraKerja } from "@/screens/Home/CaraKerja";
 import { Footer } from "@/components/common/Footer";
-import { Reveal } from "@/components/common/Reveal"; // Pastikan path benar
 
 export const Pricing: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<"bulanan" | "tahunan">(
     "tahunan"
   );
-
-  // Varian untuk animasi kartu yang muncul berurutan (Staggered)
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 },
-    },
-  };
 
   return (
     <div className="bg-white w-full min-h-screen flex flex-col font-inter">
@@ -28,30 +17,18 @@ export const Pricing: React.FC = () => {
       <main className="flex-grow pt-32 pb-20">
         {/* --- HEADER SECTION --- */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-[#33383f] text-3xl md:text-4xl font-semibold leading-tight mb-4">
-              Pilih Paket yang Sesuai dengan <br className="hidden md:block" />{" "}
-              Kebutuhan Pendidikan Anda
-            </h1>
-            <p className="text-[#686e77] text-base md:text-lg max-w-2xl mx-auto mb-10">
-              Platform pembelajaran berbasis AI yang fleksibel dan scalable,
-              dirancang untuk mendukung pertumbuhan individu maupun institusi
-              pendidikan.
-            </p>
-          </motion.div>
+          <h1 className="text-[#33383f] text-3xl md:text-4xl font-semibold leading-tight mb-4">
+            Pilih Paket yang Sesuai dengan <br className="hidden md:block" />{" "}
+            Kebutuhan Pendidikan Anda
+          </h1>
+          <p className="text-[#686e77] text-base md:text-lg max-w-2xl mx-auto mb-10">
+            Platform pembelajaran berbasis AI yang fleksibel dan scalable,
+            dirancang untuk mendukung pertumbuhan individu maupun institusi
+            pendidikan.
+          </p>
 
           {/* Toggle Billing */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false }}
-            className="flex justify-center items-center"
-          >
+          <div className="flex justify-center items-center">
             <div className="bg-[#f2f4f7] p-1 rounded-full flex items-center shadow-inner">
               <button
                 onClick={() => setBillingCycle("bulanan")}
@@ -81,18 +58,13 @@ export const Pricing: React.FC = () => {
                 </span>
               </button>
             </div>
-          </motion.div>
+          </div>
         </section>
 
         {/* --- PRICING CARDS --- */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+            {/* Monthly Plan */}
             <PricingCard
               title="Monthly Plan"
               description="Untuk individu & pendidik mandiri"
@@ -106,6 +78,7 @@ export const Pricing: React.FC = () => {
               buttonText="Mulai Gratis"
             />
 
+            {/* Annual Plan (Featured) */}
             <PricingCard
               title="Annual Plan"
               description="Paling hemat untuk jangka panjang"
@@ -121,6 +94,7 @@ export const Pricing: React.FC = () => {
               subPrice="Hemat 20% dibanding bulanan"
             />
 
+            {/* Enterprise */}
             <PricingCard
               title="Enterprise"
               description="Untuk sekolah, institusi & organisasi"
@@ -134,23 +108,21 @@ export const Pricing: React.FC = () => {
               ]}
               buttonText="Hubungi Kami"
             />
-          </motion.div>
+          </div>
         </section>
 
         {/* --- COMPARISON TABLE --- */}
-        <Reveal>
-          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-[#33383f] text-3xl font-semibold mb-2">
-                Bandingkan Fitur Lengkap
-              </h2>
-              <p className="text-[#686e77]">
-                Detail spesifikasi untuk setiap paket
-              </p>
-            </div>
-            <ComparisonTable />
-          </section>
-        </Reveal>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-[#33383f] text-3xl font-semibold mb-2">
+              Bandingkan Fitur Lengkap
+            </h2>
+            <p className="text-[#686e77]">
+              Detail spesifikasi untuk setiap paket
+            </p>
+          </div>
+          <ComparisonTable />
+        </section>
       </main>
 
       <Manfaat />
@@ -197,12 +169,7 @@ const PricingCard = ({
   isPopular?: boolean;
   subPrice?: string;
 }) => (
-  <motion.div
-    variants={{
-      hidden: { opacity: 0, y: 30 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-    }}
-    whileHover={{ y: -8, transition: { duration: 0.2 } }}
+  <div
     className="relative rounded-2xl bg-white overflow-visible h-full"
     style={{
       border: isPopular ? "0.758px solid #bedbff" : "0.758px solid #e5e7eb",
@@ -219,8 +186,7 @@ const PricingCard = ({
     )}
 
     {isPopular && (
-      <motion.div
-        viewport={{ once: false }}
+      <div
         className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[12px] font-bold py-1 px-4 rounded-full uppercase tracking-wider whitespace-nowrap z-10"
         style={{
           top: 0,
@@ -229,7 +195,7 @@ const PricingCard = ({
         }}
       >
         Paling Populer
-      </motion.div>
+      </div>
     )}
 
     {/* Card content */}
@@ -296,7 +262,7 @@ const PricingCard = ({
         </button>
       )}
     </div>
-  </motion.div>
+  </div>
 );
 
 const TblCheck = ({ col }: { col: "monthly" | "annual" | "enterprise" }) =>
@@ -357,6 +323,7 @@ const ComparisonTable = () => (
         </tr>
       </thead>
       <tbody className="text-[14px]">
+
         <tr className="bg-[rgba(249,250,251,0.5)] border-b border-[#e5e7eb]">
           <td colSpan={4} className="px-5 py-3 font-medium text-[#101828]">
             Fitur AI
