@@ -87,7 +87,7 @@ export const CaraKerja: React.FC = () => {
               className="flex flex-col items-center text-center"
             >
               <div className="relative mb-8 flex items-center justify-center w-full">
-                {/* Garis Penghubung (Dotted Line) */}
+                {/* Garis Penghubung */}
                 {index < steps.length - 1 && (
                   <div className="hidden md:flex absolute left-[50%] w-full justify-center gap-2 z-0">
                     {[...Array(7)].map((_, i) => (

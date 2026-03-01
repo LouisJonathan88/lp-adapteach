@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import { Check, Minus } from "lucide-react";
-import { motion } from "framer-motion"; // Tambahkan import motion
+import { motion } from "framer-motion";
 import { NavbarPricing } from "@/components/common/NavPricing";
 import { Manfaat } from "@/screens/Home//Manfaat";
 import { CaraKerja } from "@/screens/Home/CaraKerja";
 import { Footer } from "@/components/common/Footer";
-import { Reveal } from "@/components/common/Reveal"; // Pastikan path benar
+import { Reveal } from "@/components/common/Reveal";
 
 export const Pricing: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<"bulanan" | "tahunan">(
     "tahunan"
   );
 
-  // Varian untuk animasi kartu yang muncul berurutan (Staggered)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
