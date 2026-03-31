@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="w-full bg-[#1a1c1e] text-white pt-20 pb-10 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div id="faq" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* MOBILE LAYOUT */}
         <motion.div 
@@ -96,7 +96,7 @@ export const Footer: React.FC = () => {
           variants={fadeInVariants}
           className="hidden lg:block"
         >
-          <div className="flex flex-row justify-between gap-16 mb-20">
+          <div id="faq" className="flex flex-row justify-between gap-16 mb-20">
             <div className="flex-1">
               <p className="font-inter font-medium text-sm leading-none tracking-[0.06em] text-white/60 opacity-60 uppercase mb-4">
                 Contact Us

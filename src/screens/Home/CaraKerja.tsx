@@ -55,7 +55,7 @@ export const CaraKerja: React.FC = () => {
   };
 
   return (
-    <section className="w-full py-24 bg-white overflow-hidden">
+    <section id="cara-kerja" className="w-full py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <motion.div 
@@ -137,19 +137,22 @@ export const CaraKerja: React.FC = () => {
           ))}
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
           viewport={{ once: false }}
           className="flex flex-col items-center text-center"
         >
+          <div id="partner">
+
           <p className="font-inter font-medium text-base leading-none text-[#692AFF] text-center mb-3">
             Partner
           </p>
           <h2 className=" font-inter font-semibold text-[40px] leading-[1.5] tracking-[-0.02em] text-[#33383F] text-center max-w-[647px] mx-auto mb-16">
             Bisnis Partner Kami
           </h2>
+          
           <div className="flex flex-wrap justify-center items-center gap-12 lg:gap-24">
             {Object.values(partnerLogos).map((logo, idx) => (
               <img
@@ -159,6 +162,7 @@ export const CaraKerja: React.FC = () => {
                 className="h-14 w-auto object-contain"
               />
             ))}
+          </div>
           </div>
         </motion.div>
       </div>

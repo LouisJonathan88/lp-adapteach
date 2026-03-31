@@ -10,11 +10,11 @@ export const NavbarPricing = () => {
   };
 
   const navLinks = [
-    { name: "Fitur Kami", href: "#" },
-    { name: "Cara Kerja", href: "#" },
-    { name: "Manfaat Fitur", href: "#" },
-    { name: "Partner", href: "#" },
-    { name: "FAQ", href: "#" },
+    { name: "Fitur Kami", href: "/home#fitur" },
+    { name: "Cara Kerja", href: "#cara-kerja" },
+    { name: "Manfaat Fitur", href: "#manfaat" },
+    { name: "Partner", href: "#partner" },
+    { name: "FAQ", href: "#faq" },
     { name: "Hubungi Kami", href: "/pricing" },
   ];
 

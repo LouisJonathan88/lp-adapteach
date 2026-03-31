@@ -18,7 +18,7 @@ export const Fitur: React.FC = () => {
   };
 
   return (
-    <section className="w-full py-20 bg-white overflow-hidden">
+    <section id="fitur" className="w-full py-20 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <motion.div 

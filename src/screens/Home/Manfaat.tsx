@@ -82,7 +82,7 @@ export const Manfaat: React.FC = () => {
   );
 
   return (
-    <section className="w-full py-24 bg-[#191D22] text-white overflow-hidden">
+    <section id="manfaat" className="w-full py-24 bg-[#191D22] text-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

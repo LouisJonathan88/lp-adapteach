@@ -339,9 +339,10 @@ export const Pricing: React.FC = () => {
           </AnimatePresence>
         </section>
       </main>
-
-      <Manfaat />
-      <CaraKerja />
+      <div className="space-y-5">
+        <Manfaat />
+        <CaraKerja />
+      </div>
       <Footer />
     </div>
   );

@@ -4,9 +4,24 @@ import { Fitur } from "./Fitur";
 import { Manfaat } from "./Manfaat";
 import { CaraKerja } from "./CaraKerja";
 import { Footer } from "@/components/common/Footer";
-import { Reveal } from "@/components/common/Reveal";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
 export const Home: React.FC = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 700);
+      }
+    }
+  }, [location]);
+
   const imgImage2 = "/Inovasi Cerdas.png";
 
   return (
@@ -56,18 +71,11 @@ export const Home: React.FC = () => {
             </div>
           </div>
         </section>
-
-        <Reveal>
-          <Fitur />
-        </Reveal>
-
-        <Reveal>
+        <Fitur />
+        <div className="space-y-5">
           <Manfaat />
-        </Reveal>
-
-        <Reveal>
           <CaraKerja />
-        </Reveal>
+        </div>
       </main>
 
       <Footer />
