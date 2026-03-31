@@ -1,16 +1,255 @@
 import React, { useState } from "react";
-import { Check, Minus } from "lucide-react";
-import { motion } from "framer-motion";
+import { Check } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { NavbarPricing } from "@/components/common/NavPricing";
 import { Manfaat } from "@/screens/Home//Manfaat";
 import { CaraKerja } from "@/screens/Home/CaraKerja";
 import { Footer } from "@/components/common/Footer";
-import { Reveal } from "@/components/common/Reveal";
+
+const bulananPlans = [
+  {
+    title: "Free Plan",
+    description: "Untuk individu & pendidik mandiri",
+    price: "Rp 0",
+    priceUnit: "/Bulan",
+    features: [
+      "3x Free Generate per Bulan",
+      "Materi ajar dinamis",
+      "Dashboard pembelajaran",
+    ],
+    buttonText: "Mulai Gratis",
+    isPopular: false,
+  },
+  {
+    title: "Premium Plan",
+    description: "Terbaik untuk Individual",
+    price: "Rp 49.000",
+    priceUnit: "/Bulan",
+    features: [
+      "20x Generated per Bulan",
+      "Rencana Pembelajaran",
+      "Analitik pembelajaran",
+      "Prioritas update fitur",
+    ],
+    buttonText: "Coba Sekarang",
+    isPopular: true,
+  },
+  {
+    title: "Plus Plan",
+    description: "Paling terbaik untuk jangka panjang",
+    price: "Rp 99.000",
+    priceUnit: "/Bulan",
+    features: [
+      "Unlimited Generated per Bulan",
+      "Rencana Pembelajaran",
+      "Full Akses semua fitur",
+    ],
+    buttonText: "Hubungi Kami",
+    isPopular: false,
+  },
+];
+
+const tahunanPlans = [
+  {
+    title: "Enterprise Plan",
+    description: "Terbaik untuk Individual",
+    price: "Rp 35.000",
+    priceUnit: "/Bulan",
+    subPrice: "Harga lebih stabil untuk Institusi",
+    features: [
+      "Unlimited Generated",
+      "Full akses",
+      "Minimal 10 akun guru pembelian",
+      "Prioritas update fitur",
+    ],
+    buttonText: "Coba Sekarang",
+    isPopular: true,
+  },
+  {
+    title: "Premium Plan",
+    description: "Terbaik untuk Individual",
+    price: "Segera Datang",
+    features: [
+      "20x Generated per Bulan",
+      "Rencana Pembelajaran",
+      "Analitik pembelajaran",
+      "Prioritas update fitur",
+    ],
+    buttonText: "Hubungi Kami",
+    isPopular: false,
+  },
+  {
+    title: "Free Plan",
+    description: "Untuk individu & pendidik mandiri",
+    price: "Segera Datang",
+    features: [
+      "3x Free Generate per Bulan",
+      "Materi ajar dinamis",
+      "Dashboard pembelajaran",
+    ],
+    buttonText: "Hubungi Kami",
+    isPopular: false,
+  },
+];
+
+const CheckBadge = ({ variant }: { variant: "blue" | "purple" }) => (
+  <span
+    className="inline-flex items-center justify-center rounded-full shrink-0"
+    style={{
+      width: 24,
+      height: 24,
+      backgroundColor: variant === "blue" ? "#eff6ff" : "#f2edff",
+    }}
+  >
+    <Check
+      strokeWidth={2}
+      style={{
+        width: 16,
+        height: 16,
+        color: variant === "blue" ? "#155dfc" : "#692aff",
+      }}
+    />
+  </span>
+);
+
+interface PlanData {
+  title: string;
+  description: string;
+  price: string;
+  priceUnit?: string;
+  subPrice?: string;
+  features: string[];
+  buttonText: string;
+  isPopular: boolean;
+}
+
+const PricingCard = ({
+  title,
+  description,
+  price,
+  priceUnit,
+  subPrice,
+  features,
+  buttonText,
+  isPopular,
+}: PlanData) => {
+  const isComingSoon = price === "Segera Datang";
+
+  return (
+    <motion.div
+      layout
+      variants={{
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+      }}
+      whileHover={{ y: -8, transition: { duration: 0.2 } }}
+      className="relative rounded-2xl bg-white overflow-visible h-full"
+      style={{
+        border: isPopular ? "0.758px solid #bedbff" : "0.758px solid #e5e7eb",
+        boxShadow: isPopular
+          ? "0px 4px 6px rgba(0,0,0,0.1), 0px 2px 4px rgba(0,0,0,0.1)"
+          : "0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px rgba(0,0,0,0.1)",
+      }}
+    >
+      {/* Popular tint overlay */}
+      {isPopular && (
+        <div
+          className="absolute inset-0 rounded-2xl pointer-events-none"
+          style={{ backgroundColor: "rgba(239,246,255,0.3)" }}
+        />
+      )}
+
+      {/* Popular badge */}
+      {isPopular && (
+        <div
+          className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[12px] font-bold py-1 px-4 rounded-full uppercase tracking-wider whitespace-nowrap z-10"
+          style={{
+            top: 0,
+            background: "linear-gradient(to right, #155dfc, #7f22fe)",
+            boxShadow:
+              "0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px rgba(0,0,0,0.1)",
+          }}
+        >
+          Paling Populer
+        </div>
+      )}
+
+      {/* Card content */}
+      <div className="relative z-10 p-8 flex flex-col h-full">
+        <h3 className="text-[#101828] text-[18px] font-semibold mb-1 tracking-[-0.44px]">
+          {title}
+        </h3>
+        <p className="text-[#6a7282] text-[14px] mb-6">{description}</p>
+
+        {/* Price */}
+        <div className="flex items-baseline gap-1 mb-2">
+          <span
+            className="text-[#101828] font-bold"
+            style={{
+              fontSize: isComingSoon ? 34 : 36,
+              letterSpacing: "-0.53px",
+            }}
+          >
+            {price}
+          </span>
+          {!isComingSoon && priceUnit && (
+            <span className="text-[#6a7282] text-[14px] font-medium">
+              {priceUnit}
+            </span>
+          )}
+        </div>
+
+        {subPrice ? (
+          <p className="text-[#00a63e] text-[12px] font-medium mb-6">
+            {subPrice}
+          </p>
+        ) : (
+          <div className="h-4 mb-6" />
+        )}
+
+        {/* Feature list */}
+        <ul className="space-y-4 mb-8 flex-grow">
+          {features.map((f, i) => (
+            <li
+              key={i}
+              className="flex items-center gap-3 text-[14px] text-[#4a5565]"
+            >
+              <CheckBadge variant={isPopular ? "purple" : "blue"} />
+              {f}
+            </li>
+          ))}
+        </ul>
+
+        {/* CTA Button */}
+        {isPopular ? (
+          <button
+            className="w-full py-3 rounded-xl text-[14px] font-semibold text-white transition-opacity hover:opacity-90 mt-auto"
+            style={{
+              background: "linear-gradient(to right, #6a2cfe, #010ffe)",
+              boxShadow: "0px 4px 6px 0px #cebeff, 0px 2px 4px 0px #cebeff",
+            }}
+          >
+            {buttonText}
+          </button>
+        ) : (
+          <button
+            className="w-full py-3 rounded-xl text-[14px] font-semibold text-[#101828] bg-white hover:bg-gray-50 transition-colors mt-auto"
+            style={{ border: "0.758px solid #e5e7eb" }}
+          >
+            {buttonText}
+          </button>
+        )}
+      </div>
+    </motion.div>
+  );
+};
 
 export const Pricing: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<"bulanan" | "tahunan">(
     "tahunan"
   );
+
+  const plans = billingCycle === "bulanan" ? bulananPlans : tahunanPlans;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -34,7 +273,7 @@ export const Pricing: React.FC = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-[#33383f] text-3xl md:text-4xl font-semibold leading-tight mb-4">
-              Pilih Paket yang Sesuai dengan <br className="hidden md:block" />{" "}
+              Pilih Paket yang Sesuai dengan <br className="hidden md:block" />
               Kebutuhan Pendidikan Anda
             </h1>
             <p className="text-[#686e77] text-base md:text-lg max-w-2xl mx-auto mb-10">
@@ -56,7 +295,7 @@ export const Pricing: React.FC = () => {
                 onClick={() => setBillingCycle("bulanan")}
                 className={`px-6 py-2 rounded-full text-sm font-semibold transition-all ${
                   billingCycle === "bulanan"
-                    ? "bg-white text-[#101828] shadow-md"
+                    ? "bg-[#101828] text-white shadow-md"
                     : "text-[#6a7282]"
                 }`}
               >
@@ -71,85 +310,34 @@ export const Pricing: React.FC = () => {
                 }`}
               >
                 Tahunan
-                <span
-                  className={`bg-[rgba(255,255,255,0.2)] text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wide ${
-                    billingCycle !== "tahunan" ? "text-[#6a7282]" : ""
-                  }`}
-                >
-                  Hemat 20%
-                </span>
+                {billingCycle === "tahunan" && (
+                  <span className="bg-[rgba(255,255,255,0.2)] text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wide">
+                    Hemat 20%
+                  </span>
+                )}
               </button>
             </div>
           </motion.div>
         </section>
 
         {/* --- PRICING CARDS --- */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch"
-          >
-            <PricingCard
-              title="Monthly Plan"
-              description="Untuk individu & pendidik mandiri"
-              price="Rp 1.788.000"
-              features={[
-                "Rencana belajar AI",
-                "Materi ajar dinamis",
-                "Dashboard pembelajaran",
-                "Dukungan komunitas",
-              ]}
-              buttonText="Mulai Gratis"
-            />
-
-            <PricingCard
-              title="Annual Plan"
-              description="Paling hemat untuk jangka panjang"
-              price="Rp 1.490.000"
-              features={[
-                "Semua fitur Monthly Plan",
-                "Smart recommendation lanjutan",
-                "Analitik pembelajaran",
-                "Prioritas update fitur",
-              ]}
-              buttonText="Coba Sekarang"
-              isPopular={true}
-              subPrice="Hemat 20% dibanding bulanan"
-            />
-
-            <PricingCard
-              title="Enterprise"
-              description="Untuk sekolah, institusi & organisasi"
-              price="Custom Pricing"
-              features={[
-                "Custom AI learning flow",
-                "Multi-user management",
-                "Dedicated support",
-                "Integrasi sistem internal",
-                "SLA & onboarding",
-              ]}
-              buttonText="Hubungi Kami"
-            />
-          </motion.div>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={billingCycle}
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              exit={{ opacity: 0, y: 10, transition: { duration: 0.2 } }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch"
+            >
+              {plans.map(plan => (
+                <PricingCard key={plan.title + billingCycle} {...plan} />
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </section>
-
-        {/* --- COMPARISON TABLE --- */}
-        <Reveal>
-          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-[#33383f] text-3xl font-semibold mb-2">
-                Bandingkan Fitur Lengkap
-              </h2>
-              <p className="text-[#686e77]">
-                Detail spesifikasi untuk setiap paket
-              </p>
-            </div>
-            <ComparisonTable />
-          </section>
-        </Reveal>
       </main>
 
       <Manfaat />
@@ -158,294 +346,3 @@ export const Pricing: React.FC = () => {
     </div>
   );
 };
-
-const CheckBadge = ({ variant }: { variant: "blue" | "purple" }) => (
-  <span
-    className="inline-flex items-center justify-center rounded-full shrink-0"
-    style={{
-      width: 24,
-      height: 24,
-      backgroundColor: variant === "blue" ? "#eff6ff" : "#f2edff",
-    }}
-  >
-    <Check
-      strokeWidth={2}
-      style={{
-        width: 16,
-        height: 16,
-        color: variant === "blue" ? "#155dfc" : "#692aff",
-      }}
-    />
-  </span>
-);
-
-const PricingCard = ({
-  title,
-  description,
-  price,
-  features,
-  buttonText,
-  isPopular,
-  subPrice,
-}: {
-  title: string;
-  description: string;
-  price: string;
-  features: string[];
-  buttonText: string;
-  isPopular?: boolean;
-  subPrice?: string;
-}) => (
-  <motion.div
-    variants={{
-      hidden: { opacity: 0, y: 30 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-    }}
-    whileHover={{ y: -8, transition: { duration: 0.2 } }}
-    className="relative rounded-2xl bg-white overflow-visible h-full"
-    style={{
-      border: isPopular ? "0.758px solid #bedbff" : "0.758px solid #e5e7eb",
-      boxShadow: isPopular
-        ? "0px 4px 6px rgba(0,0,0,0.1), 0px 2px 4px rgba(0,0,0,0.1)"
-        : "0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px rgba(0,0,0,0.1)",
-    }}
-  >
-    {isPopular && (
-      <div
-        className="absolute inset-0 rounded-2xl pointer-events-none"
-        style={{ backgroundColor: "rgba(239,246,255,0.3)" }}
-      />
-    )}
-
-    {isPopular && (
-      <motion.div
-        viewport={{ once: false }}
-        className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[12px] font-bold py-1 px-4 rounded-full uppercase tracking-wider whitespace-nowrap z-10"
-        style={{
-          top: 0,
-          background: "linear-gradient(to right, #155dfc, #7f22fe)",
-          boxShadow: "0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px rgba(0,0,0,0.1)",
-        }}
-      >
-        Paling Populer
-      </motion.div>
-    )}
-
-    {/* Card content */}
-    <div className="relative z-10 p-8 flex flex-col h-full justify-between">
-      <h3 className="text-[#101828] text-[18px] font-semibold mb-1 tracking-[-0.44px]">
-        {title}
-      </h3>
-      <p className="text-[#6a7282] text-[14px] mb-6">{description}</p>
-
-      {/* Price */}
-      <div className="flex items-baseline gap-1 mb-2">
-        <span
-          className="text-[#101828] font-bold"
-          style={{
-            fontSize: price === "Custom Pricing" ? 32 : 36,
-            letterSpacing: "-0.53px",
-          }}
-        >
-          {price}
-        </span>
-        {price !== "Custom Pricing" && (
-          <span className="text-[#6a7282] text-[14px] font-medium">/tahun</span>
-        )}
-      </div>
-
-      {subPrice ? (
-        <p className="text-[#00a63e] text-[12px] font-medium mb-6">
-          {subPrice}
-        </p>
-      ) : (
-        <div className="h-4 mb-6" />
-      )}
-
-      {/* Feature list */}
-      <ul className="space-y-4 mb-8">
-        {features.map((f, i) => (
-          <li
-            key={i}
-            className="flex items-center gap-3 text-[14px] text-[#4a5565]"
-          >
-            <CheckBadge variant={isPopular ? "purple" : "blue"} />
-            {f}
-          </li>
-        ))}
-      </ul>
-
-      {/* CTA Button */}
-      {isPopular ? (
-        <button
-          className="w-full py-3 rounded-xl text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
-          style={{
-            background: "linear-gradient(to right, #6a2cfe, #010ffe)",
-            boxShadow: "0px 4px 6px 0px #cebeff, 0px 2px 4px 0px #cebeff",
-          }}
-        >
-          {buttonText}
-        </button>
-      ) : (
-        <button
-          className="w-full py-3 rounded-xl text-[14px] font-semibold text-[#101828] bg-white hover:bg-gray-50 transition-colors"
-          style={{ border: "0.758px solid #e5e7eb" }}
-        >
-          {buttonText}
-        </button>
-      )}
-    </div>
-  </motion.div>
-);
-
-const TblCheck = ({ col }: { col: "monthly" | "annual" | "enterprise" }) =>
-  col === "annual" ? (
-    <span
-      className="inline-flex items-center justify-center rounded-full mx-auto"
-      style={{ width: 24, height: 24, backgroundColor: "#f2edff" }}
-    >
-      <Check
-        strokeWidth={2}
-        style={{ width: 16, height: 16, color: "#692aff" }}
-      />
-    </span>
-  ) : (
-    <span
-      className="inline-flex items-center justify-center rounded-full mx-auto"
-      style={{ width: 24, height: 24, backgroundColor: "#f3f4f6" }}
-    >
-      <Check
-        strokeWidth={2}
-        style={{ width: 16, height: 16, color: "#4a5565" }}
-      />
-    </span>
-  );
-
-const TblMinus = () => (
-  <div className="flex justify-center">
-    <Minus
-      strokeWidth={2}
-      style={{ width: 16, height: 16, color: "#d1d5dc" }}
-    />
-  </div>
-);
-
-const ComparisonTable = () => (
-  <div
-    className="min-w-[800px] border border-[#e5e7eb] rounded-xl overflow-hidden bg-white"
-    style={{
-      boxShadow:
-        "0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px -1px rgba(0,0,0,0.1)",
-    }}
-  >
-    <table className="w-full text-left border-collapse">
-      <thead>
-        <tr className="bg-[#f9fafb]">
-          <th className="p-5 text-[14px] font-semibold text-[#101828] border-b border-[#e5e7eb]">
-            Fitur
-          </th>
-          <th className="p-5 text-[14px] font-semibold text-[#101828] border-b border-[#e5e7eb] text-center">
-            Monthly
-          </th>
-          <th className="p-5 text-[14px] font-semibold text-[#692aff] border-b border-[#e5e7eb] text-center">
-            Annual
-          </th>
-          <th className="p-5 text-[14px] font-semibold text-[#101828] border-b border-[#e5e7eb] text-center">
-            Enterprise
-          </th>
-        </tr>
-      </thead>
-      <tbody className="text-[14px]">
-        <tr className="bg-[rgba(249,250,251,0.5)] border-b border-[#e5e7eb]">
-          <td colSpan={4} className="px-5 py-3 font-medium text-[#101828]">
-            Fitur AI
-          </td>
-        </tr>
-
-        <tr className="border-b border-[#e5e7eb] hover:bg-gray-50 transition-colors">
-          <td className="p-5 text-[#4a5565]">AI Learning Flow</td>
-          <td className="p-5 text-center">
-            <TblCheck col="monthly" />
-          </td>
-          <td className="p-5 text-center">
-            <TblCheck col="annual" />
-          </td>
-          <td className="p-5 text-center">
-            <span className="font-medium text-[#101828]">Custom</span>
-          </td>
-        </tr>
-
-        <tr className="border-b border-[#e5e7eb] hover:bg-gray-50 transition-colors">
-          <td className="p-5 text-[#4a5565]">Smart Recommendations</td>
-          <td className="p-5 text-center">
-            <TblMinus />
-          </td>
-          <td className="p-5 text-center">
-            <TblCheck col="annual" />
-          </td>
-          <td className="p-5 text-center">
-            <TblCheck col="enterprise" />
-          </td>
-        </tr>
-
-        <tr className="border-b border-[#e5e7eb] hover:bg-gray-50 transition-colors">
-          <td className="p-5 text-[#4a5565]">Personalized Content</td>
-          <td className="p-5 text-center">
-            <TblCheck col="monthly" />
-          </td>
-          <td className="p-5 text-center">
-            <TblCheck col="annual" />
-          </td>
-          <td className="p-5 text-center">
-            <TblCheck col="enterprise" />
-          </td>
-        </tr>
-
-        <tr className="bg-[rgba(249,250,251,0.5)] border-b border-[#e5e7eb]">
-          <td colSpan={4} className="px-5 py-3 font-medium text-[#101828]">
-            Support & Analytics
-          </td>
-        </tr>
-
-        <tr className="border-b border-[#e5e7eb] hover:bg-gray-50 transition-colors">
-          <td className="p-5 text-[#4a5565]">Support Level</td>
-          <td className="p-5 text-center">
-            <span className="font-medium text-[#101828]">Email</span>
-          </td>
-          <td className="p-5 text-center">
-            <span className="font-medium text-[#1447e6]">Priority Email</span>
-          </td>
-          <td className="p-5 text-center">
-            <span className="font-medium text-[#101828]">Dedicated</span>
-          </td>
-        </tr>
-
-        <tr className="border-b border-[#e5e7eb] hover:bg-gray-50 transition-colors">
-          <td className="p-5 text-[#4a5565]">Learning Analytics</td>
-          <td className="p-5 text-center">
-            <span className="font-medium text-[#101828]">Basic</span>
-          </td>
-          <td className="p-5 text-center">
-            <span className="font-medium text-[#1447e6]">Advanced</span>
-          </td>
-          <td className="p-5 text-center">
-            <span className="font-medium text-[#101828]">Custom Reports</span>
-          </td>
-        </tr>
-
-        <tr className="hover:bg-gray-50 transition-colors">
-          <td className="p-5 text-[#4a5565]">SLA Guarantee</td>
-          <td className="p-5 text-center">
-            <TblMinus />
-          </td>
-          <td className="p-5 text-center">
-            <TblMinus />
-          </td>
-          <td className="p-5 text-center">
-            <TblCheck col="enterprise" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-);
