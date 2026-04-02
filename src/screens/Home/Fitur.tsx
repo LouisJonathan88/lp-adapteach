@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 export const Fitur: React.FC = () => {
-  const imgImage2 = "/Buat Rencana belajar dalam hitungan menit.png";
-  const imgImage3 = "/Sesuaikan Rencana belajar dengan kebutuhan siswa.png";
-  const imgImage4 = "/Penyusunan Materi Ajar yang Dinamis.png";
+  const imgImage2 = "/Buat Rencana belajar dalam hitungan menit.svg";
+  const imgImage3 = "/Sesuaikan Rencana belajar dengan kebutuhan siswa.svg";
+  const imgImage4 = "/Penyusunan Materi Ajar yang Dinamis.svg";
 
   const slideFromLeft = {
     hidden: { opacity: 0, x: -50 },
