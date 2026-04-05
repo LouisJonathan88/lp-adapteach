@@ -19,10 +19,11 @@ const bulananPlans = [
     ],
     buttonText: "Mulai Gratis",
     isPopular: false,
+    socialProof: "Coba dulu, bayar nanti",
   },
   {
     title: "Premium Plan",
-    description: "Terbaik untuk Individual",
+    description: "Pilihan terbaik untuk guru aktif",
     price: "Rp 49.000",
     priceUnit: "/Bulan",
     features: [
@@ -33,62 +34,79 @@ const bulananPlans = [
     ],
     buttonText: "Coba Sekarang",
     isPopular: true,
+    socialProof: "Favorit 80% Guru SD/SMP",
   },
   {
     title: "Plus Plan",
-    description: "Paling terbaik untuk jangka panjang",
+    description: "Satu akun untuk semua kebutuhan mengajar",
     price: "Rp 99.000",
     priceUnit: "/Bulan",
     features: [
-      "Unlimited Generated per Bulan",
+      "**Unlimited Generated per Bulan**",
       "Rencana Pembelajaran",
-      "Full Akses semua fitur",
+      "**Full Akses semua fitur**",
     ],
-    buttonText: "Hubungi Kami",
+    buttonText: "Coba Sekarang",
     isPopular: false,
+    socialProof: "Cocok untuk Guru Profesional",
   },
 ];
 
 const tahunanPlans = [
   {
-    title: "Enterprise Plan",
-    description: "Terbaik untuk Individual",
-    price: "Rp 35.000",
-    priceUnit: "/Bulan",
-    subPrice: "Harga lebih stabil untuk Institusi",
+    title: "Free Plan",
+    description: "Coba gratis, tanpa batas waktu",
+    price: "Rp 0",
+    priceUnit: "/bln",
+    isFree: true,
     features: [
-      "Unlimited Generated",
-      "Full akses",
-      "Minimal 10 akun guru pembelian",
-      "Prioritas update fitur",
+      "3x Free Generate per Bulan",
+      "Materi ajar dinamis",
+      "Dashboard pembelajaran",
     ],
-    buttonText: "Coba Sekarang",
-    isPopular: true,
+    buttonText: "Mulai Gratis",
+    isPopular: false,
+    socialProof: "Selamanya gratis, tanpa kartu kredit",
+    ctaMicrocopy: "Tidak perlu kartu kredit",
   },
   {
     title: "Premium Plan",
-    description: "Terbaik untuk Individual",
-    price: "Segera Datang",
+    description: "Pilihan terbaik untuk guru aktif",
+    price: "Rp 39.200",
+    priceUnit: "/bln",
+    billingNote: "ditagih Rp 470.400/tahun",
+    originalMonthlyPrice: "Rp 49.000",
+    originalMonthlyLabel: "jika bayar bulanan",
+    subPrice: "Hemat 20% vs bulanan",
     features: [
       "20x Generated per Bulan",
       "Rencana Pembelajaran",
       "Analitik pembelajaran",
       "Prioritas update fitur",
     ],
-    buttonText: "Hubungi Kami",
+    buttonText: "Coba Sekarang",
     isPopular: false,
+    socialProof: "Dipercaya 1.200+ Pendidik",
+    ctaMicrocopy: "Tanpa kartu kredit · Batalkan kapan saja",
   },
   {
-    title: "Free Plan",
-    description: "Untuk individu & pendidik mandiri",
-    price: "Segera Datang",
+    title: "Enterprise",
+    description: "Satu akun untuk semua kebutuhan mengajar",
+    price: "Rp 79.200",
+    priceUnit: "/bln",
+    billingNote: "ditagih Rp 950.400/tahun",
+    originalMonthlyPrice: "Rp 99.000",
+    originalMonthlyLabel: "jika bayar bulanan",
+    subPrice: "Hemat 20% vs bulanan",
     features: [
-      "3x Free Generate per Bulan",
-      "Materi ajar dinamis",
-      "Dashboard pembelajaran",
+      "**Unlimited Generated per Bulan**",
+      "Rencana Pembelajaran",
+      "**Full Akses semua fitur**",
     ],
-    buttonText: "Hubungi Kami",
-    isPopular: false,
+    buttonText: "Mulai dengan Plus",
+    isPopular: true,
+    socialProof: "Pilihan Institusi Pendidikan",
+    ctaMicrocopy: "Tanpa kartu kredit · Batalkan kapan saja",
   },
 ];
 
@@ -117,10 +135,16 @@ interface PlanData {
   description: string;
   price: string;
   priceUnit?: string;
-  subPrice?: string;
+  isFree?: boolean;
+  billingNote?: string;
+  originalMonthlyPrice?: string;
+  originalMonthlyLabel?: string;
+  subPrice?: React.ReactNode;
   features: string[];
   buttonText: string;
   isPopular: boolean;
+  socialProof?: string;
+  ctaMicrocopy?: string;
 }
 
 const PricingCard = ({
@@ -128,10 +152,16 @@ const PricingCard = ({
   description,
   price,
   priceUnit,
+  isFree,
+  billingNote,
+  originalMonthlyPrice,
+  originalMonthlyLabel,
   subPrice,
   features,
   buttonText,
   isPopular,
+  socialProof,
+  ctaMicrocopy,
 }: PlanData) => {
   const isComingSoon = price === "Segera Datang";
 
@@ -143,24 +173,29 @@ const PricingCard = ({
         visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
       }}
       whileHover={{ y: -8, transition: { duration: 0.2 } }}
-      className="relative rounded-2xl bg-white overflow-visible h-full"
+      className="relative rounded-2xl overflow-visible h-full"
       style={{
-        border: isPopular ? "0.758px solid #bedbff" : "0.758px solid #e5e7eb",
+        // border: isPopular ? "0.758px solid #bedbff" : "0.758px solid #e5e7eb",
+        // boxShadow: isPopular
+        //   ? "0px 4px 6px rgba(0,0,0,0.1), 0px 2px 4px rgba(0,0,0,0.1)"
+        //   : "0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px rgba(0,0,0,0.1)",
+        backgroundColor: isPopular ? "#F5F3FF" : "#ffffff",
+        border: isPopular ? "1.5px solid #D8B4FE" : "1px solid #e5e7eb",
         boxShadow: isPopular
-          ? "0px 4px 6px rgba(0,0,0,0.1), 0px 2px 4px rgba(0,0,0,0.1)"
-          : "0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px rgba(0,0,0,0.1)",
+          ? "0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)"
+          : "0 1px 3px rgba(0,0,0,0.05)",
       }}
     >
       {/* Popular tint overlay */}
-      {isPopular && (
+      {/* {isPopular && (
         <div
           className="absolute inset-0 rounded-2xl pointer-events-none"
           style={{ backgroundColor: "rgba(239,246,255,0.3)" }}
         />
-      )}
+      )} */}
 
       {/* Popular badge */}
-      {isPopular && (
+      {/* {isPopular && (
         <div
           className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[12px] font-bold py-1 px-4 rounded-full uppercase tracking-wider whitespace-nowrap z-10"
           style={{
@@ -172,22 +207,49 @@ const PricingCard = ({
         >
           Paling Populer
         </div>
+      )} */}
+
+ {isPopular && (
+        <div
+          className="absolute left-1/2 -translate-x-1/2 text-white text-[11px] font-bold py-1.5 px-5 rounded-full uppercase tracking-wider whitespace-nowrap z-20"
+          style={{
+            top: "-12px",
+            background: "linear-gradient(135deg, #155dfc 0%, #7f22fe 100%)",
+            boxShadow: "0 4px 12px rgba(127, 34, 254, 0.3)",
+          }}
+        >
+          Paling Populer
+        </div>
       )}
+
 
       {/* Card content */}
       <div className="relative z-10 p-8 flex flex-col h-full">
         <h3 className="text-[#101828] text-[18px] font-semibold mb-1 tracking-[-0.44px]">
           {title}
         </h3>
-        <p className="text-[#6a7282] text-[14px] mb-6">{description}</p>
+        <p className="text-[#6a7282] text-[14px] mb-6 leading-relaxed">{description}</p>
+
+   {/* Strikethrough original monthly price with context */}
+        {originalMonthlyPrice ? (
+          <div className="flex items-baseline gap-1.5 mb-1">
+            <span className="text-[#98a2b3] text-[14px] line-through font-medium">
+              {originalMonthlyPrice}
+            </span>
+            <span className="text-[#b0b7c3] text-[11px]">{originalMonthlyLabel}</span>
+          </div>
+        ) : (
+          <div className="h-5 mb-1" />
+        )}
 
         {/* Price */}
         <div className="flex items-baseline gap-1 mb-2">
           <span
-            className="text-[#101828] font-bold"
+            className="text-[#101828] font-extrabold"
             style={{
-              fontSize: isComingSoon ? 34 : 36,
-              letterSpacing: "-0.53px",
+              fontSize: isFree ? 28 : isComingSoon ? 28 : 38,
+              letterSpacing: isFree ? "-0.5px" : "-1px",
+              color: isFree ? "#6a7282" : "#101828",
             }}
           >
             {price}
@@ -199,45 +261,85 @@ const PricingCard = ({
           )}
         </div>
 
-        {subPrice ? (
-          <p className="text-[#00a63e] text-[12px] font-medium mb-6">
-            {subPrice}
-          </p>
+ {/* Billing note (e.g. "ditagih Rp 470.400/tahun") */}
+        {billingNote ? (
+          <p className="text-[#98a2b3] text-[11px] mb-2">{billingNote}</p>
         ) : (
-          <div className="h-4 mb-6" />
+          <div className="h-4 mb-2" />
+        )}
+
+         {/* Savings Badge */}
+        {subPrice ? (
+          <div className="mb-6">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-[rgba(16,185,129,0.08)] text-[#059669] text-[12px] font-bold border border-[rgba(16,185,129,0.2)] backdrop-blur-[2px]">
+              {subPrice}
+            </span>
+          </div>
+        ) : (
+          <div className="h-8 mb-6" />
         )}
 
         {/* Feature list */}
         <ul className="space-y-4 mb-8 flex-grow">
-          {features.map((f, i) => (
+          {features.map((f, i) => {
+            const isHighlighted = f.startsWith("**") && f.endsWith("**");
+            const cleanText = isHighlighted ? f.slice(2, -2) : f;
+
+              return (
             <li
-              key={i}
-              className="flex items-center gap-3 text-[14px] text-[#4a5565]"
-            >
+               key={i}
+                className={`flex items-center gap-3 text-[14px] transition-all ${
+                  isHighlighted 
+                    ? "font-bold text-[#101828]" 
+                    : "text-[#4b5563]"
+                }`}
+              >
               <CheckBadge variant={isPopular ? "purple" : "blue"} />
-              {f}
+              {cleanText}
             </li>
-          ))}
+              );
+          })}
         </ul>
+
+  {/* Social Proof */}
+        {socialProof && (
+          <p className="text-[#667085] text-[11px] font-medium text-center mb-3">
+            ✨ {socialProof}
+          </p>
+        )}
 
         {/* CTA Button */}
         {isPopular ? (
-          <button
-            className="w-full py-3 rounded-xl text-[14px] font-semibold text-white transition-opacity hover:opacity-90 mt-auto"
-            style={{
-              background: "linear-gradient(to right, #6a2cfe, #010ffe)",
-              boxShadow: "0px 4px 6px 0px #cebeff, 0px 2px 4px 0px #cebeff",
-            }}
-          >
-            {buttonText}
-          </button>
+          <>
+            <button
+              className="w-full py-3 rounded-xl text-[14px] font-bold text-white transition-all hover:scale-[1.02] active:scale-[0.98] mt-auto"
+              style={{
+                background: "linear-gradient(135deg, #6a2cfe 0%, #010ffe 100%)",
+                boxShadow: "0 8px 20px -6px rgba(106, 44, 254, 0.4)",
+              }}
+            >
+              {buttonText}
+            </button>
+            {ctaMicrocopy && (
+              <p className="text-[#98a2b3] text-[11px] text-center mt-2">
+                {ctaMicrocopy}
+              </p>
+            )}
+          </>
         ) : (
-          <button
-            className="w-full py-3 rounded-xl text-[14px] font-semibold text-[#101828] bg-white hover:bg-gray-50 transition-colors mt-auto"
-            style={{ border: "0.758px solid #e5e7eb" }}
-          >
-            {buttonText}
-          </button>
+          <>
+            <button
+              className="w-full py-3 rounded-xl text-[14px] font-bold text-[#101828] bg-white hover:bg-gray-50 transition-all hover:scale-[1.02] active:scale-[0.98] mt-auto"
+              style={{ border: "1px solid #d0d5dd" }}
+            >
+              {buttonText}
+            </button>
+            {ctaMicrocopy && (
+              <p className="text-[#98a2b3] text-[11px] text-center mt-2">
+                {ctaMicrocopy}
+              </p>
+            )}
+          </>
         )}
       </div>
     </motion.div>
