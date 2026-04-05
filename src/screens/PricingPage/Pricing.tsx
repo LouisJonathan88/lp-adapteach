@@ -175,10 +175,6 @@ const PricingCard = ({
       whileHover={{ y: -8, transition: { duration: 0.2 } }}
       className="relative rounded-2xl overflow-visible h-full"
       style={{
-        // border: isPopular ? "0.758px solid #bedbff" : "0.758px solid #e5e7eb",
-        // boxShadow: isPopular
-        //   ? "0px 4px 6px rgba(0,0,0,0.1), 0px 2px 4px rgba(0,0,0,0.1)"
-        //   : "0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px rgba(0,0,0,0.1)",
         backgroundColor: isPopular ? "#F5F3FF" : "#ffffff",
         border: isPopular ? "1.5px solid #D8B4FE" : "1px solid #e5e7eb",
         boxShadow: isPopular
@@ -186,30 +182,8 @@ const PricingCard = ({
           : "0 1px 3px rgba(0,0,0,0.05)",
       }}
     >
-      {/* Popular tint overlay */}
-      {/* {isPopular && (
-        <div
-          className="absolute inset-0 rounded-2xl pointer-events-none"
-          style={{ backgroundColor: "rgba(239,246,255,0.3)" }}
-        />
-      )} */}
-
-      {/* Popular badge */}
-      {/* {isPopular && (
-        <div
-          className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[12px] font-bold py-1 px-4 rounded-full uppercase tracking-wider whitespace-nowrap z-10"
-          style={{
-            top: 0,
-            background: "linear-gradient(to right, #155dfc, #7f22fe)",
-            boxShadow:
-              "0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px rgba(0,0,0,0.1)",
-          }}
-        >
-          Paling Populer
-        </div>
-      )} */}
-
- {isPopular && (
+  
+      {isPopular && (
         <div
           className="absolute left-1/2 -translate-x-1/2 text-white text-[11px] font-bold py-1.5 px-5 rounded-full uppercase tracking-wider whitespace-nowrap z-20"
           style={{
@@ -222,21 +196,24 @@ const PricingCard = ({
         </div>
       )}
 
-
       {/* Card content */}
       <div className="relative z-10 p-8 flex flex-col h-full">
         <h3 className="text-[#101828] text-[18px] font-semibold mb-1 tracking-[-0.44px]">
           {title}
         </h3>
-        <p className="text-[#6a7282] text-[14px] mb-6 leading-relaxed">{description}</p>
+        <p className="text-[#6a7282] text-[14px] mb-6 leading-relaxed">
+          {description}
+        </p>
 
-   {/* Strikethrough original monthly price with context */}
+        {/* original monthly price */}
         {originalMonthlyPrice ? (
           <div className="flex items-baseline gap-1.5 mb-1">
             <span className="text-[#98a2b3] text-[14px] line-through font-medium">
               {originalMonthlyPrice}
             </span>
-            <span className="text-[#b0b7c3] text-[11px]">{originalMonthlyLabel}</span>
+            <span className="text-[#b0b7c3] text-[11px]">
+              {originalMonthlyLabel}
+            </span>
           </div>
         ) : (
           <div className="h-5 mb-1" />
@@ -261,14 +238,14 @@ const PricingCard = ({
           )}
         </div>
 
- {/* Billing note (e.g. "ditagih Rp 470.400/tahun") */}
+        {/* Billing note */}
         {billingNote ? (
           <p className="text-[#98a2b3] text-[11px] mb-2">{billingNote}</p>
         ) : (
           <div className="h-4 mb-2" />
         )}
 
-         {/* Savings Badge */}
+        {/* Savings */}
         {subPrice ? (
           <div className="mb-6">
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-[rgba(16,185,129,0.08)] text-[#059669] text-[12px] font-bold border border-[rgba(16,185,129,0.2)] backdrop-blur-[2px]">
@@ -285,23 +262,21 @@ const PricingCard = ({
             const isHighlighted = f.startsWith("**") && f.endsWith("**");
             const cleanText = isHighlighted ? f.slice(2, -2) : f;
 
-              return (
-            <li
-               key={i}
+            return (
+              <li
+                key={i}
                 className={`flex items-center gap-3 text-[14px] transition-all ${
-                  isHighlighted 
-                    ? "font-bold text-[#101828]" 
-                    : "text-[#4b5563]"
+                  isHighlighted ? "font-bold text-[#101828]" : "text-[#4b5563]"
                 }`}
               >
-              <CheckBadge variant={isPopular ? "purple" : "blue"} />
-              {cleanText}
-            </li>
-              );
+                <CheckBadge variant={isPopular ? "purple" : "blue"} />
+                {cleanText}
+              </li>
+            );
           })}
         </ul>
 
-  {/* Social Proof */}
+        {/* Social Proof */}
         {socialProof && (
           <p className="text-[#667085] text-[11px] font-medium text-center mb-3">
             ✨ {socialProof}
