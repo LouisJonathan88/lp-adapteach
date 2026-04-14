@@ -29,8 +29,6 @@ const bulananPlans = [
     features: [
       "20x Generated per Bulan",
       "Rencana Pembelajaran",
-      "Analitik pembelajaran",
-      "Prioritas update fitur",
     ],
     buttonText: "Coba Sekarang",
     isPopular: true,
@@ -81,8 +79,6 @@ const tahunanPlans = [
     features: [
       "20x Generated per Bulan",
       "Rencana Pembelajaran",
-      "Analitik pembelajaran",
-      "Prioritas update fitur",
     ],
     buttonText: "Coba Sekarang",
     isPopular: false,
