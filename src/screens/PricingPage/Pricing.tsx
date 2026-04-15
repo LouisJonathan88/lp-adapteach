@@ -14,8 +14,8 @@ const bulananPlans = [
     priceUnit: "/Bulan",
     features: [
       "3x Free Generate per Bulan",
-      "Materi ajar dinamis",
-      "Dashboard pembelajaran",
+      "3x generate rencana pembelajaran",
+      "3x generate asesmen pembelajaran",
     ],
     buttonText: "Mulai Gratis",
     isPopular: false,
@@ -59,8 +59,8 @@ const tahunanPlans = [
     isFree: true,
     features: [
       "3x Free Generate per Bulan",
-      "Materi ajar dinamis",
-      "Dashboard pembelajaran",
+      "3x generate rencana pembelajaran",
+      "3x generate asesmen pembelajaran",
     ],
     buttonText: "Mulai Gratis",
     isPopular: false,
